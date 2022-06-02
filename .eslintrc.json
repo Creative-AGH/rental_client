@@ -7,12 +7,7 @@
   "settings": {
     "import/ignore": [".css$", ".scss$", "node_modules/*"]
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "plugin:css-modules/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:css-modules/recommended"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -24,7 +19,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "css-modules", "prettier"],
+  "plugins": ["react", "css-modules"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/anchor-is-valid": "off",
