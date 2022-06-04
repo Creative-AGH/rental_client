@@ -1,5 +1,7 @@
 import React from 'react';
 
-const LandingPage = () => <></>;
+import QRCode from 'components/Atoms/QRCode/QRCode';
+
+const LandingPage = () => <QRCode />;
 
 export default LandingPage;
