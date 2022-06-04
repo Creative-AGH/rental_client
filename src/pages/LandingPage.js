@@ -1,38 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import QRGenerator from 'components/Atoms/QRGenerator';
+import QRCode from 'components/Atoms/QRCode/QRCode';
 
-import css from './LandingPage.module.scss';
-
-const LandingPage = () => {
-  const [size, setSize] = useState(100);
-  const [percentege, setPercentege] = useState(0.8);
-  const [generate, setGenerate] = useState(false);
-
-  return (
-    <div className={css.container}>
-      <label htmlFor="size"> Size: </label>
-      <input
-        type="number"
-        value={size}
-        onChange={(e) => {
-          setSize(e.target.value);
-          setGenerate(false);
-        }}
-      />
-      <label htmlFor="percentege"> Percentege: </label>
-      <input
-        type="number"
-        value={percentege}
-        onChange={(e) => {
-          setPercentege(e.target.value);
-          setGenerate(false);
-        }}
-      />
-      <button onClick={() => setGenerate(true)}>Generate</button>
-      {generate && <QRGenerator size={size} percentege={percentege} />}
-    </div>
-  );
-};
+const LandingPage = () => <QRCode />;
 
 export default LandingPage;
