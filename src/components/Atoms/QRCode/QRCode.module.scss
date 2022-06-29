@@ -1,7 +1,9 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 5rem;
+  display: grid;
+  row-gap: 20px;
+
+  /* stylelint-disable-next-line scss/selector-no-redundant-nesting-selector */
+  & > label {
+    --font-weight: 700;
+  }
 }

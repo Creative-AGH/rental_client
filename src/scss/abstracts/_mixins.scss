@@ -9,3 +9,7 @@
     @content;
   }
 }
+
+@mixin border-radious-btn() {
+  border-radius: 100vmax;
+}
