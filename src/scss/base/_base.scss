@@ -1,0 +1,20 @@
+/* Base */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--scroll-pading, 0);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p:empty {
+  display: none;
+}
+
+:target {
+  outline: 5px solid var(--clr-outline, #f00);
+  outline-offset: 5px;
+}

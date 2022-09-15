@@ -1,0 +1,15 @@
+/* Mixins */
+@use 'breakpoints' as *;
+@use 'functions' as *;
+
+@mixin mq($key) {
+  $size: map-get($breakpoints, $key);
+
+  @media only screen and (min-width: #{calculate-rem($size)}) {
+    @content;
+  }
+}
+
+@mixin border-radious-btn() {
+  border-radius: 100vmax;
+}

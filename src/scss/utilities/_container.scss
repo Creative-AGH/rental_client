@@ -1,0 +1,41 @@
+/* Containers */
+.container {
+  padding: 0 1.5rem;
+  max-width: 62.5rem;
+  margin: 0 auto;
+}
+
+.wrapper {
+  margin-inline: auto;
+  padding-inline: var(--space-m);
+  max-width: 75rem;
+  position: relative;
+}
+
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-placement, auto-fill), minmax(var(--grid-min-item-size, 16rem)));
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter, var(--space-s));
+  justify-content: var(--cluster-horizontal-alignment, flex-start);
+  align-items: var(--cluster-vertical-alignment, center);
+}
+
+.full-width {
+  box-shadow: 0 0 0 100vmax var(--bg-color, #ccc);
+  clip-path: inset(0 -100vmax);
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
