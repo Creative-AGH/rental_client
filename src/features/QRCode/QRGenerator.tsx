@@ -7,10 +7,11 @@ import { useEffect, useDeferredValue } from 'react';
 import clsx from 'clsx';
 import css from './QRGenerator.module.scss';
 import loader from '../../assets/images/loaders/cube.gif';
+import { QRGeneratorT } from '../../types/QRT';
 
 const pad = '000000000000000';
 
-const QRGenerator: React.FC<{ size: number; percentage: number }> = ({ size, percentage }) => {
+const QRGenerator = ({ size, percentage }: QRGeneratorT) => {
   const qrRef = React.useRef<HTMLDivElement>(null);
   const qrRef2 = React.useRef<HTMLDivElement>(null);
   const [images, setImages] = React.useState([
