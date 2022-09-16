@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import QRCode from 'qrcode.react';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
@@ -6,14 +6,21 @@ import PropTypes from 'prop-types';
 import { useEffect, useDeferredValue } from 'react';
 import clsx from 'clsx';
 import css from './QRGenerator.module.scss';
-import loader from 'assets/images/loaders/cube.gif';
+import loader from '../../assets/images/loaders/cube.gif';
 
 const pad = '000000000000000';
 
-const QRGenerator = ({ size, percentege }) => {
-  const qrRef = React.useRef();
-  const qrRef2 = React.useRef();
-  const [images, setImages] = React.useState([]);
+const QRGenerator: React.FC<{ size: number; percentage: number }> = ({ size, percentage }) => {
+  const qrRef = React.useRef<HTMLDivElement>(null);
+  const qrRef2 = React.useRef<HTMLDivElement>(null);
+  const [images, setImages] = React.useState([
+    {
+      url: '',
+      name: '',
+      id: '',
+      image: '',
+    },
+  ]);
   const [count, setCount] = React.useState(0);
   const [isPending, startTransition] = React.useTransition();
 
@@ -32,6 +39,7 @@ const QRGenerator = ({ size, percentege }) => {
           url: `https://picsum.photos/id/${i}/200/300`,
           name: `Przedmiot${i}`,
           id: `${pad.substring(0, pad.length - i.toString().length) + i.toString()}`,
+          image: '',
         });
       }
       setImages(links);
@@ -40,9 +48,9 @@ const QRGenerator = ({ size, percentege }) => {
 
   useEffect(() => {
     startTransition(() => {
-      images.forEach((link) => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+      images.forEach((link: { url: string; name: string; id: string; image: string }) => {
+        const canvas = document.createElement('canvas') as HTMLCanvasElement;
+        const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
         ctx.font = `50px "Helvetica"`;
 
         const {
@@ -68,24 +76,26 @@ const QRGenerator = ({ size, percentege }) => {
 
   const generateQRcode = () => {
     startTransition(() => {
-      const qrs = [...qrRef.current.children];
-      const qrs2 = [...qrRef2.current.children];
-      qrs.forEach((canvas) => {
-        if (canvas.tagName === 'CANVAS') {
-          const img = canvas.toDataURL('image/png').replace(/^data:image\/[a-z]+;base64,/, '');
-          const name = canvas.id;
-          zip.folder('PNG').file(name + '.png', img, { base64: true });
-        }
-      });
-      qrs2.forEach((svg) => {
-        const svgString = new XMLSerializer().serializeToString(svg);
-        const svg64 = btoa(svgString);
-        const name = svg.id;
-        zip.folder('SVG').file(name + '.svg', svg64, { base64: true });
-      });
-      zip.generateAsync({ type: 'blob' }).then((content) => {
-        FileSaver.saveAs(content, 'qrcodes.zip');
-      });
+      if (qrRef.current?.children && qrRef2.current?.children) {
+        const qrs = Array.from(qrRef.current.children);
+        const qrs2 = Array.from(qrRef2.current.children);
+        qrs.forEach((canvas: any) => {
+          if (canvas.tagName === 'CANVAS') {
+            const img = canvas.toDataURL('image/png').replace(/^data:image\/[a-z]+;base64,/, '');
+            const name = canvas.id;
+            zip?.folder('PNG')?.file(name + '.png', img, { base64: true });
+          }
+        });
+        qrs2.forEach((svg: any) => {
+          const svgString = new XMLSerializer().serializeToString(svg);
+          const svg64 = btoa(svgString);
+          const name = svg.id;
+          zip?.folder('SVG')?.file(name + '.svg', svg64, { base64: true });
+        });
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          FileSaver.saveAs(content, 'qrcodes.zip');
+        });
+      }
     });
   };
 
@@ -136,7 +146,8 @@ const QRGenerator = ({ size, percentege }) => {
             renderAs="canvas"
             imageSettings={{
               src: image,
-              width: (size / 2) * percentege,
+              width: (size / 2) * percentage,
+              height: (size / 2) * 0.1,
               excavate: true,
             }}
           />
@@ -153,7 +164,8 @@ const QRGenerator = ({ size, percentege }) => {
             renderAs="svg"
             imageSettings={{
               src: image,
-              width: percentege * size,
+              width: percentage * size,
+              height: (size / 2) * 0.1,
               excavate: true,
             }}
           />
@@ -165,7 +177,7 @@ const QRGenerator = ({ size, percentege }) => {
 
 QRGenerator.propTypes = {
   size: PropTypes.number.isRequired,
-  percentege: PropTypes.number.isRequired,
+  percentage: PropTypes.number.isRequired,
 };
 
 export default QRGenerator;

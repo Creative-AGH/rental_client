@@ -1,6 +1,6 @@
 import React, { useState, useTransition } from 'react';
 
-import QRGenerator from 'components/Atoms/QRCode/QRGenerator';
+import QRGenerator from './QRGenerator';
 
 import css from './QRCode.module.scss';
 
@@ -17,7 +17,7 @@ const QRCode = () => {
         type="number"
         value={size}
         onChange={(e) => {
-          setSize(e.target.value);
+          setSize(parseInt(e.target.value));
           setGenerate(false);
         }}
       />
@@ -26,13 +26,13 @@ const QRCode = () => {
         type="number"
         value={percentege}
         onChange={(e) => {
-          setPercentege(e.target.value);
+          setPercentege(parseInt(e.target.value));
           setGenerate(false);
         }}
       />
       <button onClick={() => startTransition(() => setGenerate(true))}>Generate</button>
       {isPending && <div>Loading...</div>}
-      {generate && <QRGenerator size={size} percentege={percentege} />}
+      {generate && <QRGenerator size={size} percentage={percentege} />}
     </div>
   );
 };
