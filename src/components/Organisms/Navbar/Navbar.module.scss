@@ -1,0 +1,117 @@
+@import '../../../scss/abstracts/mixins';
+
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px #f0f1f2;
+  min-height: 64px;
+  line-height: 64px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding-inline: 25px;
+
+  &__logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+  }
+}
+
+.menu {
+  display: block;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  background-color: #fff;
+
+  &.active {
+    transform: translateX(0);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    a {
+      text-decoration: none;
+    }
+
+    &:hover {
+      color: #1890ff;
+    }
+
+    &.button {
+      margin-right: 25px;
+      background-color: #1890ff;
+      color: #fff;
+      padding: 0 15px;
+      border-radius: 100vmax;
+      height: 32px;
+      line-height: 32px;
+      font-size: 16px;
+      margin-block: auto;
+      max-width: fit-content;
+    }
+  }
+}
+
+.burger {
+  display: block;
+  cursor: pointer;
+  margin-left: auto;
+  position: relative;
+  z-index: 3;
+
+  &__line {
+    width: 30px;
+    height: 5px;
+    background-color: #000;
+    margin-top: 5px;
+  }
+
+  &.active {
+    position: fixed;
+    top: 17px;
+    right: 25px;
+  }
+}
+
+@include mq(medium) {
+  .navbar {
+    padding-inline: 50px;
+  }
+
+  .menu {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+    height: auto;
+    width: auto;
+    column-gap: 25px;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    transform: translateX(0);
+
+    &__item.button {
+      margin-left: auto;
+    }
+  }
+
+  .burger {
+    display: none;
+  }
+}
