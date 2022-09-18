@@ -6,7 +6,8 @@ const UserLayout = () => {
   return (
     <div>
       <Theme className='dark' />
-      <Outlet />
+      <main><Outlet /></main>
+
     </div>
   );
 };
