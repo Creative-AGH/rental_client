@@ -18,6 +18,10 @@
     display: flex;
     align-items: center;
     margin-right: 50px;
+
+    &.dark {
+      filter: invert(1);
+    }
   }
 }
 
