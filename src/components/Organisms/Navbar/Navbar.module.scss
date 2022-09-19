@@ -1,7 +1,7 @@
 @import '../../../scss/abstracts/mixins';
 
 .navbar {
-  background-color: #fff;
+  background-color: var(--background-color);
   border-bottom: 1px solid #e8e8e8;
   box-shadow: 0 2px 8px #f0f1f2;
   min-height: 64px;
@@ -47,7 +47,7 @@
       text-decoration: none;
     }
 
-    &:hover {
+    &:hover:not(:last-child) {
       color: #1890ff;
     }
 
@@ -108,6 +108,10 @@
 
     &__item.button {
       margin-left: auto;
+    }
+
+    &__item.toggle {
+      margin-left: 0;
     }
   }
 

@@ -3,6 +3,7 @@ import logo from '../../../assets/images/logo/logo.svg';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import css from './Navbar.module.scss';
+import Theme from '../../../features/Theme/Theme';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
         <div className={css.navbar__logo}>
           <img src={logo} alt="logo" />
         </div>
+
         <ul
           className={clsx(css.menu, {
             [css.active]: isMenuOpen,
@@ -34,6 +36,9 @@ const Navbar = () => {
           </li>
           <li className={clsx(css.menu__item, css.button)}>
             <Link to="/logout">Wyloguj się</Link>
+          </li>
+          <li className={clsx(css.menu__item, css.toggle)}>
+            <Theme className="dark" />
           </li>
         </ul>
         <div className={clsx(css.burger, { [css.active]: isMenuOpen })} onClick={handleMenuToggle}>

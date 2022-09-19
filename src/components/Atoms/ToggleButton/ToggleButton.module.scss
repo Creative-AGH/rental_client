@@ -1,6 +1,10 @@
+@import '../../../scss/abstracts/mixins';
+
 .darkmode {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .checkbox {
@@ -28,7 +32,7 @@
   width: 20px;
   height: 20px;
   left: 0;
-  background-color: var(--text-color);
+  background-color: var(--clr-priamry);
   position: absolute;
   border-radius: 50%;
   transition: transform 0.2s linear;
@@ -36,4 +40,11 @@
 
 .checkbox:checked + .label .ball {
   transform: translateX(20px);
+}
+
+@include mq(small) {
+  .darkmode {
+    margin-top: 0;
+    margin-left: 0;
+  }
 }
