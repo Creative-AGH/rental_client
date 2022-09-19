@@ -5,7 +5,7 @@ import cn from 'classnames'
 import { set } from './slice'
 import styles from './theme.module.scss'
 import { ThemePropsT, themeStateT } from '../../types/ThemeT'
-import ToggleButton from '../../components/Layout/ToggleButton/ToggleButton'
+import ToggleButton from '../../components/Atoms/ToggleButton/ToggleButton'
 
 const Theme = ({ className }: ThemePropsT) => {
     const theme = useSelector((state: themeStateT) => state.theme)
