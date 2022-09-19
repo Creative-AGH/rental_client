@@ -2,6 +2,7 @@ import { useState } from 'react';
 import logo from '../../../assets/images/logo/logo.svg';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+// eslint-disable-next-line
 import css from './Navbar.module.scss';
 import Theme from '../../../features/Theme/Theme';
 import { useSelector } from 'react-redux';
@@ -26,13 +27,13 @@ const Navbar = () => {
             [css.active]: isMenuOpen,
           })}>
           <li className={css.menu__item}>
-            <Link to="/search">Znajdź sprzęt</Link>
+            <Link to="/">Znajdź sprzęt</Link>
           </li>
           <li className={css.menu__item}>
-            <Link to="/history">Historia wypozyczeń</Link>
+            <Link to="/user/history">Historia wypozyczeń</Link>
           </li>
           <li className={css.menu__item}>
-            <Link to="/settings">Ustawienia</Link>
+            <Link to="/user/settings">Ustawienia</Link>
           </li>
           <li className={css.menu__item}>
             <Link to="/contact">Kontakt</Link>
