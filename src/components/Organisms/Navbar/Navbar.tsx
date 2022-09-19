@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import css from './Navbar.module.scss';
 import Theme from '../../../features/Theme/Theme';
+import { useSelector } from 'react-redux';
+import { themeStateT } from '../../../types/ThemeT';
 
 const Navbar = () => {
+  const theme = useSelector((state: themeStateT) => state.theme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -14,7 +17,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={css.navbar}>
-        <div className={css.navbar__logo}>
+        <div className={clsx(css.navbar__logo, css[theme])}>
           <img src={logo} alt="logo" />
         </div>
 
