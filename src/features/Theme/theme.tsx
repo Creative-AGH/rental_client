@@ -29,7 +29,6 @@ const Theme = ({ className }: ThemePropsT) => {
                 theme === 'dark' ? styles.dark : styles.light)}
             onClick={handleChange}
         />
-
     )
 }
 
