@@ -1,3 +1,4 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Theme from '../../features/Theme/theme';
 

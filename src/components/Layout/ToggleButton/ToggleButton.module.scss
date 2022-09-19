@@ -1,0 +1,39 @@
+.darkmode {
+  display: flex;
+  justify-content: center;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 60px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.label {
+  width: 40px;
+  height: 20px;
+  background-color: #999;
+  display: flex;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  transform: scale(1.5);
+}
+
+.ball {
+  width: 20px;
+  height: 20px;
+  left: 0;
+  background-color: var(--text-color);
+  position: absolute;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+  transform: translateX(20px);
+}
