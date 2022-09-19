@@ -4,8 +4,11 @@
 }
 
 .checkbox {
-  opacity: 0;
   position: absolute;
+  opacity: 0;
+  width: 60px;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .label {
@@ -19,7 +22,6 @@
   padding: 5px;
   position: relative;
   transform: scale(1.5);
-  cursor: pointer;
 }
 
 .ball {
@@ -33,5 +35,5 @@
 }
 
 .checkbox:checked + .label .ball {
-  transform: translateX(24px);
+  transform: translateX(20px);
 }
