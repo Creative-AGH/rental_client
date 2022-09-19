@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Theme from '../../features/Theme/theme';
+import Theme from '../../features/Theme/Theme';
 
 const UserLayout = () => {
   return (
