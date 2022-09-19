@@ -1,21 +1,20 @@
 :root {
   --clr-white: #e0e1dd;
   --clr-black: rgb(34, 34, 42);
+  --clr-primary: #415a77;
+  --clr-secondary: #778da9;
 
   &[data-theme='light'] {
-    --clr-priamry: #1c2541;
-    --clr-secondary: ;
-    --clr-accent: ;
     --clr-text: var(--clr-black);
-    --clr-background: ;
+    --clr-box-shadow: #f0f1f2;
+    --clr-background-100: #fff;
+    --clr-background-200: #fff;
   }
 
   &[data-theme='dark'] {
-    --clr-priamry: #415a77;
-    --clr-secondary: #778da9;
-    --clr-accent: ;
     --clr-text: #e0e1dd;
-    --clr-background-100: #1b232b;
+    --clr-box-shadow: #263756;
+    --clr-background-100: #0d1b2a;
     --clr-background-200: #1b263b;
   }
 }

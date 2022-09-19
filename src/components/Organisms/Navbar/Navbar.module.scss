@@ -1,9 +1,9 @@
 @import '../../../scss/abstracts/mixins';
 
 .navbar {
-  background-color: var(--background-color);
-  border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 2px 8px #f0f1f2;
+  background-color: var(--clr-background-200);
+  border-bottom: 1px solid var(--clr-box-shadow);
+  box-shadow: 0 2px 8px var(--clr-box-shadow);
   min-height: 64px;
   line-height: 64px;
   position: fixed;
@@ -35,7 +35,7 @@
   z-index: 2;
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
-  background-color: #fff;
+  background-color: var(--clr-background-200);
 
   &.active {
     transform: translateX(0);
@@ -52,12 +52,12 @@
     }
 
     &:hover:not(:last-child) {
-      color: #1890ff;
+      color: var(--clr-secondary);
     }
 
     &.button {
       margin-right: 25px;
-      background-color: #1890ff;
+      background-color: var(--clr-primary);
       color: #fff;
       padding: 0 15px;
       border-radius: 100vmax;
@@ -80,7 +80,7 @@
   &__line {
     width: 30px;
     height: 5px;
-    background-color: #000;
+    background-color: var(--clr-primary);
     margin-top: 5px;
   }
 
@@ -91,7 +91,7 @@
   }
 }
 
-@include mq(medium) {
+@include mq(large) {
   .navbar {
     padding-inline: 50px;
   }
