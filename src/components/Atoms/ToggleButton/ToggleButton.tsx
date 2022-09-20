@@ -7,9 +7,8 @@ const ToggleButton = ({ onClick }: toggleButtonT) => {
         <div className={styles.darkmode} >
             <input type="checkbox" className={styles.checkbox} onClick={onClick} />
             <label htmlFor="checkbox" className={styles.label} >
-                <BsFillSunFill />
                 <BsFillMoonFill />
-
+                <BsFillSunFill />
                 <div className={styles.ball}></div>
             </label>
         </div>
