@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link to="/">Znajdź sprzęt</Link>
           </li>
           <li className={css.menu__item}>
-            <Link to="/user/history">Historia wypozyczeń</Link>
+            <Link to="/user/history">Historia wypożyczeń</Link>
           </li>
           <li className={css.menu__item}>
             <Link to="/user/settings">Ustawienia</Link>
