@@ -11,13 +11,13 @@ const COLORS = {
   selected: '#4286c7',
 };
 
-const useEditMap = (data: MapLayerApiT[]) => {
+const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [selectedContainer, setSelectedContainer] = useState<SelectItemT | null>(null);
   const mapRef = useRef<any>();
 
-  // adding custom img map
+  // adding custom img map and open Popup
   useEffect(() => {
     if (isReady && mapRef.current != null) {
       const img = new Image();
@@ -38,7 +38,10 @@ const useEditMap = (data: MapLayerApiT[]) => {
         });
       };
     }
-  }, [isReady]);
+    setTimeout(() => {
+      selectedContainer && selectedContainer.shape.openPopup();
+    }, 10);
+  }, [isReady, mapRef.current]);
 
   // changing color of active layer
 
@@ -121,7 +124,7 @@ const useEditMap = (data: MapLayerApiT[]) => {
 
         // adding event listener to the shape
         shape.on('click', () => {
-          setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
+          selectedContainer && setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
         });
 
         return {
@@ -136,9 +139,12 @@ const useEditMap = (data: MapLayerApiT[]) => {
       // if there is a selected container on start, select it
       if (selectedContainerId) {
         const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
-        selectedLayer
-          ? setSelectedContainer(selectedLayer)
-          : alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
+        if (selectedLayer) {
+          selectedLayer.shape.bindPopup(`Przedmiot znajduje się w tej szafce`);
+          setSelectedContainer(selectedLayer);
+        } else {
+          alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
+        }
       }
       setIsReady(true);
       setMapLayers([...layers]);

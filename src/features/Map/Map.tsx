@@ -53,14 +53,16 @@ const dataFromApi = [
 const Map = ({
   data = dataFromApi,
   selectedContainerId = 125,
+  mapImg,
 }: {
   data?: MapLayerApiT[];
   selectedContainerId?: number;
+  mapImg: string;
 }) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
-    useEditMap(data);
+    useEditMap(data, mapImg);
 
   return (
     <>
@@ -91,7 +93,7 @@ const Map = ({
                 )}
               </FeatureGroup>
             </MapContainer>
-            <div style={{ border: '1px solid #f00' }}>
+            {/* <div style={{ border: '1px solid #f00' }}>
               <div>
                 selectedContainer:{' '}
                 {selectedContainer ? (
@@ -115,7 +117,7 @@ const Map = ({
                 <br />
               </div>
             ))}
-            &#93;
+            &#93; */}
           </div>
         </div>
       </div>
