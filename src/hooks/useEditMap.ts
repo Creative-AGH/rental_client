@@ -14,7 +14,7 @@ const COLORS = {
 const useEditMap = (data: MapLayerApiT[]) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useState<SelectItemT | null>(null);
+  const [selectedContainer, setSelectedContainer] = useState<SelectItemT | null>(null);
   const mapRef = useRef<any>();
 
   // adding custom img map
@@ -48,12 +48,12 @@ const useEditMap = (data: MapLayerApiT[]) => {
         color: COLORS.unSelected,
       });
     });
-    if (selectedItem) {
-      selectedItem.shape.setStyle({
+    if (selectedContainer) {
+      selectedContainer.shape.setStyle({
         color: COLORS.selected,
       });
     }
-  }, [selectedItem]);
+  }, [selectedContainer]);
 
   // event handlers
 
@@ -66,13 +66,13 @@ const useEditMap = (data: MapLayerApiT[]) => {
       return;
     }
     layer.on('click', () => {
-      setSelectedItem({
+      setSelectedContainer({
         id: _leaflet_id,
         name,
         shape: layer,
       });
     });
-    setSelectedItem({
+    setSelectedContainer({
       id: _leaflet_id,
       name,
       shape: layer,
@@ -105,7 +105,7 @@ const useEditMap = (data: MapLayerApiT[]) => {
     } = e;
 
     Object.values(_layers).map(({ _leaflet_id }: any) => {
-      setSelectedItem(null);
+      setSelectedContainer(null);
       setMapLayers((layers) => layers.filter((l) => l.id !== _leaflet_id));
     });
   };
@@ -121,7 +121,7 @@ const useEditMap = (data: MapLayerApiT[]) => {
 
         // adding event listener to the shape
         shape.on('click', () => {
-          setSelectedItem({ id: shape._leaflet_id, name, shape, container_id });
+          setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
         });
 
         return {
@@ -136,7 +136,9 @@ const useEditMap = (data: MapLayerApiT[]) => {
       // if there is a selected container on start, select it
       if (selectedContainerId) {
         const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
-        selectedLayer ? setSelectedItem(selectedLayer) : alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
+        selectedLayer
+          ? setSelectedContainer(selectedLayer)
+          : alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
       }
       setIsReady(true);
       setMapLayers([...layers]);
@@ -146,8 +148,8 @@ const useEditMap = (data: MapLayerApiT[]) => {
   return {
     mapRef,
     mapLayers,
-    selectedItem,
-    setSelectedItem,
+    selectedContainer,
+    setSelectedContainer,
     _onCreate,
     _onEdited,
     _onDeleted,

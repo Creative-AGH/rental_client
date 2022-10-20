@@ -59,7 +59,7 @@ const Map = ({
 }) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
 
-  const { mapRef, mapLayers, selectedItem, setSelectedItem, _onCreate, _onEdited, _onDeleted, _onMapReady } =
+  const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
     useEditMap(data);
 
   return (
@@ -94,10 +94,10 @@ const Map = ({
             <div style={{ border: '1px solid #f00' }}>
               <div>
                 selectedContainer:{' '}
-                {selectedItem ? (
+                {selectedContainer ? (
                   <div>
-                    <div>nazwa: {selectedItem.name}</div>
-                    <div>_leaflet_id: {selectedItem.id}</div>
+                    <div>nazwa: {selectedContainer.name}</div>
+                    <div>_leaflet_id: {selectedContainer.id}</div>
                   </div>
                 ) : (
                   'Nie zaznaczono'
