@@ -1,12 +1,13 @@
-import ItemTilesContainer from "../components/Organisms/ItemTilesContainer/ItemTilesContainer";
+import ItemTilesContainer from '../components/Organisms/ItemTilesContainer/ItemTilesContainer';
+import Map from '../features/Map/Map';
 
 function ItemSearch() {
   return (
     <div>
-      ItemSearch
       <ItemTilesContainer />
+      <Map />
     </div>
-  )
+  );
 }
 
 export default ItemSearch;
