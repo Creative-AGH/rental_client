@@ -1,5 +1,11 @@
+import Map from '../features/Map/Map';
+
 function ItemSearch() {
-  return <div>ItemSearch</div>;
+  return (
+    <div>
+      <Map />
+    </div>
+  );
 }
 
 export default ItemSearch;
