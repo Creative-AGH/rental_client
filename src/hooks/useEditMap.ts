@@ -5,6 +5,7 @@ import { SelectItemT } from '../types/SelectItemT';
 import { DrawEvents } from 'leaflet';
 import mapImg from './map.png';
 import { LatLngBounds } from 'leaflet';
+import { newPlaceModal } from '../components/Layout/Modal/Modal';
 
 const COLORS = {
   unSelected: '#93a6b8',
@@ -15,7 +16,13 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [selectedContainer, setSelectedContainer] = useState<SelectItemT | null>(null);
+  const responseRef = useRef<any>(null);
   const mapRef = useRef<any>();
+
+  const showModal = () =>
+    newPlaceModal()
+      .then((e) => (responseRef.current = e))
+      .catch((e) => console.log(e));
 
   // adding custom img map and open Popup
   useEffect(() => {
@@ -60,14 +67,21 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
 
   // event handlers
 
-  const _onCreate = (e: any) => {
+  const _onCreate = async (e: any) => {
     const { layer } = e;
     const { _leaflet_id } = layer;
-    const name = prompt('Podaj nazwę') || '';
-    if (!name) {
+
+    //show modal
+    await showModal();
+    const name = responseRef.current?.name;
+    const description = responseRef.current?.description;
+    responseRef.current = null;
+    if (!name || !description) {
       e.target.removeLayer(layer);
       return;
     }
+
+    layer.bindPopup(`${description}`);
     layer.on('click', () => {
       setSelectedContainer({
         id: _leaflet_id,

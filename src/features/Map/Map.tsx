@@ -58,13 +58,13 @@ const Map = ({
   data = dataFromApi,
   selectedContainerId = 'place1',
   mapImg,
+  isEditable = false,
 }: {
   data?: MapLayerApiT[];
   selectedContainerId?: string | null;
   mapImg: string;
+  isEditable?: boolean;
 }) => {
-  const [isEditable, setIsEditable] = useState<boolean>(true);
-
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
     useEditMap(data, mapImg);
 
@@ -77,7 +77,7 @@ const Map = ({
               <FeatureGroup
                 ref={(ref) => {
                   if (ref) {
-                    _onMapReady(ref, null);
+                    _onMapReady(ref, selectedContainerId);
                   }
                 }}>
                 {isEditable && (
