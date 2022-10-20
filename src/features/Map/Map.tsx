@@ -87,7 +87,7 @@ const Map = ({ data = dataFromApi }: { data?: MapLayerApiT[] }) => {
             </MapContainer>
             <div style={{ border: '1px solid #f00' }}>
               <div>
-                selectedItem:{' '}
+                selectedContainer:{' '}
                 {selectedItem ? (
                   <div>
                     <div>nazwa: {selectedItem.name}</div>
@@ -103,7 +103,7 @@ const Map = ({ data = dataFromApi }: { data?: MapLayerApiT[] }) => {
               <div key={layer.id}>
                 &#123;
                 <div>name: {`"${layer.name}"`},</div>
-                <div>container_id: {layer.id},</div>
+                <div>_leaflet_id: {layer.id},</div>
                 <div>latlngs: {JSON.stringify(layer.latlngs)},</div>
                 &#125;,
                 <br />
