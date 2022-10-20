@@ -10,7 +10,7 @@ const MapSearch = () => {
   return (
     <div>
       przedmiot o id {item_id} zanjduje się w szfce o id {container_id} w Budynku B5
-      <Map selectedContainerId={Number(container_id)} mapImg={mapImg} />
+      <Map selectedContainerId={container_id} mapImg={mapImg} />
     </div>
   );
 };

@@ -113,19 +113,22 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
     });
   };
 
-  const _onMapReady = (featureGroup: any, selectedContainerId?: number) => {
+  const _onMapReady = (featureGroup: any, selectedContainerId?: string | null) => {
     // adding layers from data
     if (mapLayers.length === 0 && !isReady) {
-      const layers = data.map(({ container_id, latlngs, name }) => {
+      const layers = data.map(({ container_id, latlngs, name, description }) => {
         const shape = L.rectangle(latlngs as any, {
           color: COLORS.unSelected,
           weight: 2,
         }).addTo(featureGroup) as any;
 
         // adding event listener to the shape
-        shape.on('click', () => {
-          selectedContainer && setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
-        });
+        !selectedContainerId &&
+          shape.on('click', () => {
+            setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
+          });
+
+        !selectedContainerId && description && shape.bindPopup(description);
 
         return {
           id: shape._leaflet_id,

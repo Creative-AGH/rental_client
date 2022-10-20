@@ -10,7 +10,8 @@ import styles from './Map.module.scss';
 const dataFromApi = [
   {
     name: 'test',
-    container_id: 40,
+    container_id: 'place1',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     latlngs: [
       { lat: 2.1084763939094078, lng: -6.526403944101136 },
       { lat: 3.514265730212766, lng: -6.526403944101136 },
@@ -20,7 +21,8 @@ const dataFromApi = [
   },
   {
     name: '123123sdafsdf',
-    container_id: 116,
+    container_id: 'place2',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
     latlngs: [
       { lat: 1.3400575447762981, lng: 4.338314447148083 },
       { lat: 3.469405155187203, lng: 4.338314447148083 },
@@ -30,7 +32,8 @@ const dataFromApi = [
   },
   {
     name: 'sdfsdfsdf',
-    container_id: 120,
+    container_id: 'place3',
+    description: '',
     latlngs: [
       { lat: -3.4697090278990825, lng: -6.537991410423057 },
       { lat: -1.252493779263844, lng: -6.537991410423057 },
@@ -40,7 +43,8 @@ const dataFromApi = [
   },
   {
     name: 'sdfsdfsd',
-    container_id: 125,
+    container_id: 'place4',
+    description: 'Lorem ipsum',
     latlngs: [
       { lat: -3.425843258931504, lng: 3.8549230757005053 },
       { lat: -1.1865907497561037, lng: 3.8549230757005053 },
@@ -52,14 +56,14 @@ const dataFromApi = [
 
 const Map = ({
   data = dataFromApi,
-  selectedContainerId = 125,
+  selectedContainerId = 'place1',
   mapImg,
 }: {
   data?: MapLayerApiT[];
-  selectedContainerId?: number;
+  selectedContainerId?: string | null;
   mapImg: string;
 }) => {
-  const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [isEditable, setIsEditable] = useState<boolean>(true);
 
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
     useEditMap(data, mapImg);
@@ -73,7 +77,7 @@ const Map = ({
               <FeatureGroup
                 ref={(ref) => {
                   if (ref) {
-                    _onMapReady(ref, selectedContainerId);
+                    _onMapReady(ref, null);
                   }
                 }}>
                 {isEditable && (
