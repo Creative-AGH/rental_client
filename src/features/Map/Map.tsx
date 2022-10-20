@@ -50,9 +50,15 @@ const dataFromApi = [
   },
 ];
 
-const Map = ({ data = dataFromApi }: { data?: MapLayerApiT[] }) => {
-  const ZOOM_LEVEL = 12;
-  const [isEditable, setIsEditable] = useState<boolean>(true);
+const Map = ({
+  data = dataFromApi,
+  selectedContainerId = 125,
+}: {
+  data?: MapLayerApiT[];
+  selectedContainerId?: number;
+}) => {
+  const [isEditable, setIsEditable] = useState<boolean>(false);
+
   const { mapRef, mapLayers, selectedItem, setSelectedItem, _onCreate, _onEdited, _onDeleted, _onMapReady } =
     useEditMap(data);
 
@@ -61,11 +67,11 @@ const Map = ({ data = dataFromApi }: { data?: MapLayerApiT[] }) => {
       <div className="row">
         <div className="col text-center">
           <div className="col">
-            <MapContainer className={styles.map} center={[0, 0]} ref={mapRef}>
+            <MapContainer className={styles.map} center={[0, 0]} ref={mapRef} scrollWheelZoom={false}>
               <FeatureGroup
                 ref={(ref) => {
                   if (ref) {
-                    _onMapReady(ref);
+                    _onMapReady(ref, selectedContainerId);
                   }
                 }}>
                 {isEditable && (

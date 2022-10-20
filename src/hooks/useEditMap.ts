@@ -6,17 +6,16 @@ import { DrawEvents } from 'leaflet';
 import mapImg from './map.png';
 import { LatLngBounds } from 'leaflet';
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
-});
+const COLORS = {
+  unSelected: '#93a6b8',
+  selected: '#4286c7',
+};
 
 const useEditMap = (data: MapLayerApiT[]) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const mapRef = useRef<any>();
   const [selectedItem, setSelectedItem] = useState<SelectItemT | null>(null);
+  const mapRef = useRef<any>();
 
   // adding custom img map
   useEffect(() => {
@@ -46,12 +45,12 @@ const useEditMap = (data: MapLayerApiT[]) => {
   useEffect(() => {
     mapLayers.forEach(({ shape }) => {
       shape.setStyle({
-        color: '#93a6b8',
+        color: COLORS.unSelected,
       });
     });
     if (selectedItem) {
       selectedItem.shape.setStyle({
-        color: '#4286c7',
+        color: COLORS.selected,
       });
     }
   }, [selectedItem]);
@@ -111,16 +110,18 @@ const useEditMap = (data: MapLayerApiT[]) => {
     });
   };
 
-  const _onMapReady = (featureGroup: any) => {
+  const _onMapReady = (featureGroup: any, selectedContainerId?: number) => {
+    // adding layers from data
     if (mapLayers.length === 0 && !isReady) {
       const layers = data.map(({ container_id, latlngs, name }) => {
         const shape = L.rectangle(latlngs as any, {
-          color: '#93a6b8',
+          color: COLORS.unSelected,
           weight: 2,
         }).addTo(featureGroup) as any;
 
+        // adding event listener to the shape
         shape.on('click', () => {
-          setSelectedItem({ id: shape._leaflet_id, name, shape });
+          setSelectedItem({ id: shape._leaflet_id, name, shape, container_id });
         });
 
         return {
@@ -131,6 +132,12 @@ const useEditMap = (data: MapLayerApiT[]) => {
           shape,
         };
       });
+
+      // if there is a selected container on start, select it
+      if (selectedContainerId) {
+        const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
+        selectedLayer ? setSelectedItem(selectedLayer) : alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
+      }
       setIsReady(true);
       setMapLayers([...layers]);
     }
