@@ -7,6 +7,8 @@
   border-radius: 15px;
   gap: 15px;
   color: var(--clr-text);
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .text {
@@ -23,10 +25,6 @@
 .arrow {
   margin-left: auto;
   font-size: 2rem;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 span h5 {
