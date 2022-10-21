@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<ItemSearch />} />
         <Route path="user" element={<LandingPage />} />
         <Route path="/user/history" element={<ItemHistory />} />
-        <Route path="/user/mapSearch" element={<MapSearch />} />
+        <Route path="/mapSearch" element={<MapSearch />} />
       </Route>
     </Routes>
   );

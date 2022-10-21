@@ -56,7 +56,7 @@ const dataFromApi = [
 
 const Map = ({
   data = dataFromApi,
-  selectedContainerId = 'place1',
+  selectedContainerId,
   mapImg,
   isEditable = false,
 }: {
