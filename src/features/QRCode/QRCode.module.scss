@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  row-gap: 20px;
+
+  /* stylelint-disable-next-line scss/selector-no-redundant-nesting-selector */
+  & > label {
+    --font-weight: 700;
+  }
+}

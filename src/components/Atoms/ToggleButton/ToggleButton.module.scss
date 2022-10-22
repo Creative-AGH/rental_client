@@ -1,0 +1,52 @@
+@import '../../../scss/abstracts/mixins';
+
+.darkmode {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 60px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.label {
+  width: 40px;
+  height: 20px;
+  display: flex;
+  border-radius: 50px;
+  border: 1px solid #000;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  transform: scale(1.5);
+  font-size: 0.8rem;
+  background-color: var(--clr-background-100);
+}
+
+.ball {
+  width: 20px;
+  height: 20px;
+  left: 0;
+  background-color: var(--clr-primary);
+  position: absolute;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+  transform: translateX(20px);
+}
+
+@include mq(large) {
+  .darkmode {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
