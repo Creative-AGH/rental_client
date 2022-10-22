@@ -6,8 +6,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { itemApiSlice } from './features/api/itemApiSlice';
+import { placeApiSlice } from './features/api/placeApiSlice';
 
 store.dispatch(itemApiSlice.endpoints.getAllItems.initiate());
+store.dispatch(placeApiSlice.endpoints.getAllPlaces.initiate());
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
