@@ -129,29 +129,35 @@ const useEditMap = (data: GetPlaceT[] | undefined, mapImg: string) => {
   const _onMapReady = (featureGroup: any, selectedContainerId?: string | null) => {
     // adding layers from data
     if (mapLayers.length === 0 && !isReady && data) {
-      const layers = data.map(({ id, latlngs, name, description }) => {
-        const shape = L.rectangle(latlngs as any, {
-          color: COLORS.unSelected,
-          weight: 2,
-        }).addTo(featureGroup) as any;
+      const layers = data
+        .filter(
+          //filtering out layers with no coordinates
+          (d) => d.latlngs.length > 0
+        )
+        .map(({ id, latlngs, name, description }) => {
+          const shape = L.rectangle(latlngs as any, {
+            color: COLORS.unSelected,
+            weight: 2,
+          }).addTo(featureGroup) as any;
 
-        // adding event listener to the shape
-        !selectedContainerId &&
-          shape.on('click', () => {
-            setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
-          });
+          // adding event listener to the shape
+          !selectedContainerId &&
+            shape.on('click', () => {
+              setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
+            });
 
-        !selectedContainerId && description && shape.bindPopup(description);
+          !selectedContainerId && description && shape.bindPopup(description);
 
-        return {
-          id: shape._leaflet_id,
-          container_id: id,
-          latlngs: shape.getLatLngs()[0],
-          name,
-          shape,
-        };
-      });
+          return {
+            id: shape._leaflet_id,
+            container_id: id,
+            latlngs: shape.getLatLngs()[0],
+            name,
+            shape,
+          };
+        });
 
+      // delete layer where latlngs is empty
       // if there is a selected container on start, select it
       if (selectedContainerId) {
         const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);

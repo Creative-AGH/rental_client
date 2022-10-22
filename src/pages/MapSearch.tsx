@@ -10,7 +10,7 @@ const MapSearch = () => {
   const item = useSelector((state) => selectItemById(state, itemid || '') as GetItem);
   if (!item) return <div>Nie znaleziono przedmiotu</div>;
 
-  return <div>{item && <Map selectedContainerId={item.place.id} mapImg={mapImg} />}</div>;
+  return <div>{item && <Map selectedContainerId={item.place ? item.place.id : ''} mapImg={mapImg} />}</div>;
 };
 
 export default MapSearch;
