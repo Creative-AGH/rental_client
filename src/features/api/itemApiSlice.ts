@@ -1,7 +1,7 @@
 import { apiSlice } from './apiSlice';
 import { GetItem } from '../../types/GetItemT';
 
-export const extendItemApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Item'] }).injectEndpoints({
+export const itemApiSlice = apiSlice.enhanceEndpoints({ addTagTypes: ['Item'] }).injectEndpoints({
   endpoints: (builder) => ({
     getAllItems: builder.query<GetItem[], void>({
       query: () => 'user/items',
@@ -20,4 +20,4 @@ export const extendItemApi = apiSlice.enhanceEndpoints({ addTagTypes: ['Item'] }
   }),
 });
 
-export const { useGetAllBorrowedItemsQuery, useGetAllItemsQuery, useGetItemQuery } = extendItemApi;
+export const { useGetAllBorrowedItemsQuery, useGetAllItemsQuery, useGetItemQuery } = itemApiSlice;

@@ -1,14 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import themeReducer from '../features/Theme/slice';
-import { placeApiSlice } from '../features/api/placeApiSlice';
-import { itemApiSlice } from '../features/api/itemApiSlice';
+import { apiSlice } from '../features/api/apiSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
-    [placeApiSlice.reducerPath]: placeApiSlice.reducer,
-    [itemApiSlice.reducerPath]: itemApiSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(placeApiSlice.middleware, itemApiSlice.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });
