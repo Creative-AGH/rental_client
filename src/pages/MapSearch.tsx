@@ -1,18 +1,16 @@
-import { useSearchParams } from 'react-router-dom';
 import Map from '../features/Map/Map';
 import mapImg from './map.png';
+import { selectItemById } from '../features/api/itemApiSlice';
+import { useSelector } from 'react-redux';
+import { GetItem } from '../types/ApiTypes';
+import { useParams } from 'react-router-dom';
 
 const MapSearch = () => {
-  const [searchParams] = useSearchParams();
-  const container_id = searchParams.get('container_id');
-  const item_id = searchParams.get('item_id');
-  // here will be a call to redux to get the data for the map and the item
-  return (
-    <div>
-      przedmiot o id {item_id} zanjduje się w szfce o id {container_id} w Budynku B5
-      <Map selectedContainerId={Number(container_id)} mapImg={mapImg} />
-    </div>
-  );
+  const { itemid } = useParams<{ itemid: string }>();
+  const item = useSelector((state) => selectItemById(state, itemid || '') as GetItem);
+  if (!item) return <div>Nie znaleziono przedmiotu</div>;
+
+  return <div>{item && <Map selectedContainerId={item.place ? item.place.id : ''} mapImg={mapImg} />}</div>;
 };
 
 export default MapSearch;

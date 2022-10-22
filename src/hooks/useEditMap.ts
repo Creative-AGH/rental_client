@@ -1,21 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { MapLayerT, MapLayerApiT } from '../types/MapLayerT';
-import { SelectItemT } from '../types/SelectItemT';
-import { DrawEvents } from 'leaflet';
-import mapImg from './map.png';
 import { LatLngBounds } from 'leaflet';
+import { newPlaceModal } from '../components/Layout/Modal/Modal';
+import { MapLayerT } from '../types/MapLayerT';
+import { SelectItemT } from '../types/SelectItemT';
+import { GetPlaceT } from '../types/ApiTypes';
 
 const COLORS = {
   unSelected: '#93a6b8',
   selected: '#4286c7',
 };
 
-const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
+const useEditMap = (data: GetPlaceT[] | undefined, mapImg: string) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [selectedContainer, setSelectedContainer] = useState<SelectItemT | null>(null);
+  const responseRef = useRef<any>(null);
   const mapRef = useRef<any>();
+
+  const showModal = () =>
+    newPlaceModal()
+      .then((e) => (responseRef.current = e))
+      .catch((e) => console.log(e));
 
   // adding custom img map and open Popup
   useEffect(() => {
@@ -60,14 +66,21 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
 
   // event handlers
 
-  const _onCreate = (e: any) => {
+  const _onCreate = async (e: any) => {
     const { layer } = e;
     const { _leaflet_id } = layer;
-    const name = prompt('Podaj nazwę') || '';
-    if (!name) {
+
+    //show modal
+    await showModal();
+    const name = responseRef.current?.name;
+    const description = responseRef.current?.description;
+    responseRef.current = null;
+    if (!name || !description) {
       e.target.removeLayer(layer);
       return;
     }
+
+    layer.bindPopup(`${description}`);
     layer.on('click', () => {
       setSelectedContainer({
         id: _leaflet_id,
@@ -113,37 +126,45 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
     });
   };
 
-  const _onMapReady = (featureGroup: any, selectedContainerId?: number) => {
+  const _onMapReady = (featureGroup: any, selectedContainerId?: string | null) => {
     // adding layers from data
-    if (mapLayers.length === 0 && !isReady) {
-      const layers = data.map(({ container_id, latlngs, name }) => {
-        const shape = L.rectangle(latlngs as any, {
-          color: COLORS.unSelected,
-          weight: 2,
-        }).addTo(featureGroup) as any;
+    if (mapLayers.length === 0 && !isReady && data) {
+      const layers = data
+        .filter(
+          //filtering out layers with no coordinates
+          (d) => d.latlngs.length > 0
+        )
+        .map(({ id, latlngs, name, description }) => {
+          const shape = L.rectangle(latlngs as any, {
+            color: COLORS.unSelected,
+            weight: 2,
+          }).addTo(featureGroup) as any;
 
-        // adding event listener to the shape
-        shape.on('click', () => {
-          selectedContainer && setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
+          // adding event listener to the shape
+          !selectedContainerId &&
+            shape.on('click', () => {
+              setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
+            });
+
+          !selectedContainerId && description && shape.bindPopup(description);
+
+          return {
+            id: shape._leaflet_id,
+            container_id: id,
+            latlngs: shape.getLatLngs()[0],
+            name,
+            shape,
+          };
         });
 
-        return {
-          id: shape._leaflet_id,
-          container_id,
-          latlngs: shape.getLatLngs()[0],
-          name,
-          shape,
-        };
-      });
-
+      // delete layer where latlngs is empty
       // if there is a selected container on start, select it
       if (selectedContainerId) {
         const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
         if (selectedLayer) {
           selectedLayer.shape.bindPopup(`Przedmiot znajduje się w tej szafce`);
+          delete selectedLayer.latlngs;
           setSelectedContainer(selectedLayer);
-        } else {
-          alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
         }
       }
       setIsReady(true);

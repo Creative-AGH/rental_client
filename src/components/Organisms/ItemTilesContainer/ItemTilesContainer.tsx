@@ -1,26 +1,17 @@
 import ItemTile from '../../Atoms/ItemTile/ItemTile';
+import { useGetAllItemsQuery } from '../../../features/api/itemApiSlice';
+import { selectItemIds } from '../../../features/api/itemApiSlice';
+import { useSelector } from 'react-redux';
 
 const ItemTilesContainer = () => {
+  const { error, isLoading, isError, isSuccess } = useGetAllItemsQuery();
+
+  const itemIds = useSelector(selectItemIds);
   return (
     <div>
-      <ItemTile
-        title="Test"
-        description="Lorem ipsum"
-        imgUrl="https://i.pravatar.cc/70"
-        itemData={{ item_id: 1, container_id: 40 }}
-      />
-      <ItemTile
-        title="Test2"
-        description="Lorem ipsum"
-        imgUrl="https://i.pravatar.cc/71"
-        itemData={{ item_id: 2, container_id: 116 }}
-      />
-      <ItemTile
-        title="Test3"
-        description="Lorem ipsum"
-        imgUrl="https://i.pravatar.cc/72"
-        itemData={{ item_id: 3, container_id: 125 }}
-      />
+      {isLoading && <div>Loading...</div>}
+      {isError && <div>Error: {JSON.stringify(error)}</div>}
+      {isSuccess && itemIds.map((id) => <ItemTile key={id} id={id.toString()} />)}
     </div>
   );
 };
