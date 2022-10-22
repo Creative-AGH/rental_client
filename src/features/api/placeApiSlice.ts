@@ -23,10 +23,7 @@ export const placeApiSlice = apiSlice.injectEndpoints({
     getPlaceById: builder.query<GetPlaceT, string>({
       query: (placeId) => `user/place/${placeId}`,
     }),
-    getItemsByPlaceId: builder.query<GetPlaceT[], string>({
-      query: (placeId) => `user/${placeId}/getItemsByPlaceId`,
-    }),
   }),
 });
 
-export const { useGetItemsByPlaceIdQuery, useGetAllPlacesQuery, useGetPlaceByIdQuery } = placeApiSlice;
+export const { useGetAllPlacesQuery, useGetPlaceByIdQuery } = placeApiSlice;

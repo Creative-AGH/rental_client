@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import UserLayout from './components/Layout/UserLayout';
 import ItemSearch from './pages/ItemSearch';
 import ItemHistory from './pages/ItemHistory';
-import MapSearch from './pages/MapSearch';
+import MapSearch from './features/Map/MapSearch/MapSearch';
 
 function App() {
   return (

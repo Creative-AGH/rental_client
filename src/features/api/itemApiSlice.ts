@@ -29,6 +29,11 @@ export const itemApiSlice = apiSlice.enhanceEndpoints({ addTagTypes: ['Item'] })
         return itemsAdapter.setAll(initialState, response) as any;
       },
     }),
+    getItemsByPlaceId: builder.query<GetItem[], string>({
+      query: (placeId) => {
+        return `user/${placeId}/getItemsByPlaceId`;
+      },
+    }),
   }),
 });
 
@@ -47,4 +52,5 @@ export const {
   // Pass in a selector that returns the posts slice of state
 } = itemsAdapter.getSelectors((state: any) => (selectPostsData(state) as any) ?? initialState);
 
-export const { useGetAllBorrowedItemsQuery, useGetAllItemsQuery, useGetItemQuery } = itemApiSlice;
+export const { useGetAllBorrowedItemsQuery, useGetAllItemsQuery, useGetItemQuery, useGetItemsByPlaceIdQuery } =
+  itemApiSlice;

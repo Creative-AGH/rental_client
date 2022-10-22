@@ -1,4 +1,4 @@
-import ItemTilesContainer from '../components/Organisms/ItemTilesContainer/ItemTilesContainer';
+import ItemTilesContainer from '../features/Map/MapSearch/ItemTilesContainer/ItemTilesContainer';
 
 function ItemSearch() {
   return (

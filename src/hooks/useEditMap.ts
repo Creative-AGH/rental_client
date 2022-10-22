@@ -9,6 +9,8 @@ import deletePlace from '../utils/deletePlace';
 import initializeMap from '../utils/initializeMap';
 import createNewPlace from '../utils/createNewPlace';
 import { MAP_COLORS } from '../constants/mapColors';
+import { useDispatch } from 'react-redux';
+import { setSelectedContainer as setGlobalSelectedContainer } from '../features/Map/mapSlice';
 
 const useEditMap = (data: GetPlaceT[] | undefined, mapImg: string) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
@@ -17,6 +19,26 @@ const useEditMap = (data: GetPlaceT[] | undefined, mapImg: string) => {
   const responseRef = useRef<any>(null);
   const mapRef = useRef<any>();
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    selectedContainer &&
+      dispatch(
+        setGlobalSelectedContainer({
+          id: selectedContainer.id,
+          name: selectedContainer.name,
+          container_id: selectedContainer.container_id,
+        })
+      );
+    return () => {
+      dispatch(
+        setGlobalSelectedContainer({
+          id: '',
+          name: '',
+          container_id: '',
+        })
+      );
+    };
+  }, [selectedContainer, dispatch]);
   // adding custom img map and open Popup
   useEffect(() => {
     if (isReady && mapRef.current != null) {

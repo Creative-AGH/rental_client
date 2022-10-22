@@ -40,10 +40,10 @@ const initializeMap = ({
         }).addTo(featureGroup) as any;
 
         // adding event listener to the shape
-        !selectedContainerId &&
-          shape.on('click', () => {
-            setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
-          });
+
+        shape.on('click', () => {
+          setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
+        });
 
         !selectedContainerId && description && shape.bindPopup(description);
 
@@ -62,8 +62,12 @@ const initializeMap = ({
       const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
       if (selectedLayer) {
         selectedLayer.shape.bindPopup(`Przedmiot znajduje się w tej szafce`);
-        delete selectedLayer.latlngs;
-        setSelectedContainer(selectedLayer);
+        setSelectedContainer({
+          id: selectedLayer.id,
+          name: selectedLayer.name,
+          shape: selectedLayer.shape,
+          container_id: selectedLayer.container_id,
+        });
       }
     }
     setIsReady(true);

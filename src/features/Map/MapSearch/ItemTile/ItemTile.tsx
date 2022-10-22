@@ -1,9 +1,9 @@
 import styles from './ItemTile.module.scss';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { GetItem } from '../../../types/ApiTypes';
+import { GetItem } from '../../../../types/ApiTypes';
 import { useSelector } from 'react-redux';
-import { selectItemById } from '../../../features/api/itemApiSlice';
+import { selectItemById } from '../../../api/itemApiSlice';
 
 const ItemTile = ({ id }: { id: string }) => {
   const { name, description, statusOfItem, categories } = useSelector((state) => selectItemById(state, id) as GetItem);

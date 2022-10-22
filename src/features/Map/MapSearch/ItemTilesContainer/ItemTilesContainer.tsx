@@ -1,6 +1,6 @@
-import ItemTile from '../../Atoms/ItemTile/ItemTile';
-import { useGetAllItemsQuery } from '../../../features/api/itemApiSlice';
-import { selectItemIds } from '../../../features/api/itemApiSlice';
+import ItemTile from '../ItemTile/ItemTile';
+import { useGetAllItemsQuery } from '../../../api/itemApiSlice';
+import { selectItemIds } from '../../../api/itemApiSlice';
 import { useSelector } from 'react-redux';
 
 const ItemTilesContainer = () => {

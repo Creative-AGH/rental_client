@@ -33,12 +33,14 @@ const createNewPlace = async ({ e, responseRef, setSelectedContainer, setMapLaye
   layer.on('click', () => {
     setSelectedContainer({
       id: _leaflet_id,
+      container_id: '',
       name,
       shape: layer,
     });
   });
   setSelectedContainer({
     id: _leaflet_id,
+    container_id: '',
     name,
     shape: layer,
   });
