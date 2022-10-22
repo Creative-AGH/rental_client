@@ -14,7 +14,7 @@ interface OwnProps {
   isEditable?: boolean;
 }
 
-const Map = ({ selectedContainerId, mapImg, isEditable = false }: OwnProps) => {
+const Map = ({ selectedContainerId, mapImg, isEditable = true }: OwnProps) => {
   const { data, isError, isLoading, isSuccess, error } = useGetAllPlacesQuery();
 
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
@@ -53,30 +53,30 @@ const Map = ({ selectedContainerId, mapImg, isEditable = false }: OwnProps) => {
                 </FeatureGroup>
               </MapContainer>
               {/* <div style={{ border: '1px solid #f00' }}>
-              <div>
-                selectedContainer:{' '}
-                {selectedContainer ? (
-                  <div>
-                    <div>nazwa: {selectedContainer.name}</div>
-                    <div>_leaflet_id: {selectedContainer.id}</div>
-                  </div>
-                ) : (
-                  'Nie zaznaczono'
-                )}
+                <div>
+                  selectedContainer:{' '}
+                  {selectedContainer ? (
+                    <div>
+                      <div>nazwa: {selectedContainer.name}</div>
+                      <div>_leaflet_id: {selectedContainer.id}</div>
+                    </div>
+                  ) : (
+                    'Nie zaznaczono'
+                  )}
+                </div>
               </div>
-            </div>
-            &#91;
-            {mapLayers.map((layer: MapLayerT) => (
-              <div key={layer.id}>
-                &#123;
-                <div>name: {`"${layer.name}"`},</div>
-                <div>_leaflet_id: {layer.id},</div>
-                <div>latlngs: {JSON.stringify(layer.latlngs)},</div>
-                &#125;,
-                <br />
-              </div>
-            ))}
-            &#93; */}
+              &#91;
+              {mapLayers.map((layer: MapLayerT) => (
+                <div key={layer.id}>
+                  &#123;
+                  <div>name: {`"${layer.name}"`},</div>
+                  <div>_leaflet_id: {layer.id},</div>
+                  <div>latlngs: {JSON.stringify(layer.latlngs)},</div>
+                  &#125;,
+                  <br />
+                </div>
+              ))}
+              &#93; */}
             </div>
           </div>
         )}
