@@ -6,6 +6,7 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import useEditMap from '../../hooks/useEditMap';
 import { MapLayerT, MapLayerApiT } from '../../types/MapLayerT';
 import styles from './Map.module.scss';
+import { useGetAllPlacesQuery } from '../api/placeApiSlice';
 
 const dataFromApi = [
   {
@@ -55,18 +56,22 @@ const dataFromApi = [
 ];
 
 const Map = ({
-  data = dataFromApi,
+  dataFromApii = dataFromApi,
   selectedContainerId,
   mapImg,
   isEditable = false,
 }: {
-  data?: MapLayerApiT[];
+  dataFromApii?: MapLayerApiT[];
   selectedContainerId?: string | null;
   mapImg: string;
   isEditable?: boolean;
 }) => {
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
-    useEditMap(data, mapImg);
+    useEditMap(dataFromApii, mapImg);
+
+  const { data, isError, isLoading, isSuccess, error } = useGetAllPlacesQuery();
+
+  isSuccess && console.log(data);
 
   return (
     <>

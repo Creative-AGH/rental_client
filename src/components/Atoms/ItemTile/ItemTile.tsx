@@ -5,7 +5,6 @@ import { GetItem } from '../../../types/GetItemT';
 
 const ItemTile = ({ data }: { data: GetItem }) => {
   const { name, description, id, statusOfItem, categories } = data;
-  console.log(data);
   return (
     <Link to={`/mapSearch?item_id=${id}`} className={styles.wrapper}>
       <img src={'https://i.pravatar.cc/72'} alt="Item picture" className={styles.picture} />

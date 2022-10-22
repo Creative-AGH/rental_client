@@ -23,6 +23,7 @@ export interface GetPlace {
   id: string;
   name: string;
   placeCoordinatesDto: any;
+  latlngs?: any;
 }
 
 export interface Image {
