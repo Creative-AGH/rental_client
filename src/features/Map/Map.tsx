@@ -14,7 +14,7 @@ interface OwnProps {
   isEditable?: boolean;
 }
 
-const Map = ({ selectedContainerId, mapImg, isEditable = false }: OwnProps) => {
+const Map = ({ selectedContainerId, mapImg, isEditable = true }: OwnProps) => {
   const { data, isError, isLoading, isSuccess, error } = useGetAllPlacesQuery();
 
   const { mapRef, mapLayers, selectedContainer, setSelectedContainer, _onCreate, _onEdited, _onDeleted, _onMapReady } =
