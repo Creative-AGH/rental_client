@@ -8,7 +8,7 @@
     "import/ignore": [".css$", ".scss$", "node_modules/*"]
   },
   "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:css-modules/recommended"],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true

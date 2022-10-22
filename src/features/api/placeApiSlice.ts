@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiSlice } from './apiSlice';
-import { GetPlace } from '../../types/GetItemT';
+import { GetPlaceT } from '../../types/ApiTypes';
+import { MapLayerApiT } from '../../types/MapLayerT';
 
 export const placeApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllPlaces: builder.query<GetPlace[], void>({
+    getAllPlaces: builder.query<GetPlaceT[], void>({
       query: () => 'user/places',
-      transformResponse: (response: GetPlace[]) => {
+      transformResponse: (response: GetPlaceT[]) => {
         return response.map((place) => {
-          const latlngs = {
-            lat: place.placeCoordinatesDto.x,
-            lng: place.placeCoordinatesDto.y,
-          };
+          const latlngs = place.placeCoordinatesDto.map((latlng: any) => {
+            return { lat: latlng.x, lng: latlng.y };
+          });
+          delete place.placeCoordinatesDto;
           return {
             ...place,
             latlngs,
@@ -19,10 +20,10 @@ export const placeApiSlice = apiSlice.injectEndpoints({
         });
       },
     }),
-    getPlaceById: builder.query<GetPlace, string>({
+    getPlaceById: builder.query<GetPlaceT, string>({
       query: (placeId) => `user/place/${placeId}`,
     }),
-    getItemsByPlaceId: builder.query<GetPlace[], string>({
+    getItemsByPlaceId: builder.query<GetPlaceT[], string>({
       query: (placeId) => `user/${placeId}/getItemsByPlaceId`,
     }),
   }),

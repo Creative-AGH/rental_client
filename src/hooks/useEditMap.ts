@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { MapLayerT, MapLayerApiT } from '../types/MapLayerT';
-import { SelectItemT } from '../types/SelectItemT';
-import { DrawEvents } from 'leaflet';
-import mapImg from './map.png';
 import { LatLngBounds } from 'leaflet';
 import { newPlaceModal } from '../components/Layout/Modal/Modal';
+import { MapLayerT } from '../types/MapLayerT';
+import { SelectItemT } from '../types/SelectItemT';
+import { GetPlaceT } from '../types/ApiTypes';
 
 const COLORS = {
   unSelected: '#93a6b8',
   selected: '#4286c7',
 };
 
-const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
+const useEditMap = (data: GetPlaceT[] | undefined, mapImg: string) => {
   const [mapLayers, setMapLayers] = useState<MapLayerT[]>([]);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [selectedContainer, setSelectedContainer] = useState<SelectItemT | null>(null);
@@ -129,8 +128,8 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
 
   const _onMapReady = (featureGroup: any, selectedContainerId?: string | null) => {
     // adding layers from data
-    if (mapLayers.length === 0 && !isReady) {
-      const layers = data.map(({ container_id, latlngs, name, description }) => {
+    if (mapLayers.length === 0 && !isReady && data) {
+      const layers = data.map(({ id, latlngs, name, description }) => {
         const shape = L.rectangle(latlngs as any, {
           color: COLORS.unSelected,
           weight: 2,
@@ -139,14 +138,14 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
         // adding event listener to the shape
         !selectedContainerId &&
           shape.on('click', () => {
-            setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id });
+            setSelectedContainer({ id: shape._leaflet_id, name, shape, container_id: id });
           });
 
         !selectedContainerId && description && shape.bindPopup(description);
 
         return {
           id: shape._leaflet_id,
-          container_id,
+          container_id: id,
           latlngs: shape.getLatLngs()[0],
           name,
           shape,
@@ -158,9 +157,8 @@ const useEditMap = (data: MapLayerApiT[], mapImg: string) => {
         const selectedLayer = layers.find(({ container_id }) => container_id === selectedContainerId);
         if (selectedLayer) {
           selectedLayer.shape.bindPopup(`Przedmiot znajduje się w tej szafce`);
+          delete selectedLayer.latlngs;
           setSelectedContainer(selectedLayer);
-        } else {
-          alert(`Nie znaleziono kontenera o id: ${selectedContainerId}`);
         }
       }
       setIsReady(true);

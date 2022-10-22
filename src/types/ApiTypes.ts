@@ -6,7 +6,7 @@ export interface GetItem {
   id: string;
   images?: Image[];
   name: string;
-  place: GetPlace;
+  place: GetPlaceT;
   statusOfItem: StatusOfItem;
 }
 
@@ -18,11 +18,11 @@ export enum StatusOfItem {
   EJECTED = 'EJECTED',
 }
 
-export interface GetPlace {
+export interface GetPlaceT {
   description: string;
   id: string;
   name: string;
-  placeCoordinatesDto: any;
+  placeCoordinatesDto?: any;
   latlngs?: any;
 }
 
